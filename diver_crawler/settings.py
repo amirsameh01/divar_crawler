@@ -127,4 +127,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 URL = 'https://divar.ir'
 
-FIRST_TIME_SETUP = False
+FIRST_TIME_SETUP = True
+
+PROFILE_PATH = "/home/amirsameh/Junkyard"

@@ -18,7 +18,7 @@ class PhoneNumScraper():
         if not settings.FIRST_TIME_SETUP:
             options.add_argument("--headless=new")
         options.page_load_strategy = 'eager'
-        options.add_argument(f"user-data-dir=/home/amirsameh/Junkyard")
+        options.add_argument(f"user-data-dir={settings.PROFILE_PATH}")
         # options.add_argument("--no-sandbox")
         # options.add_argument("--disable-dev-shm-usage")
         # options.add_argument("--disable-dev-shm-usage")
@@ -98,6 +98,7 @@ class PhoneNumScraper():
                 # Wait for the page to load (optional)
                 time.sleep(0.5)
                 try:
+                    time.sleep(0.5)
                     contact_button = self.driver.find_element(By.CSS_SELECTOR, "button.kt-button.kt-button--primary.post-actions__get-contact")
                     contact_button.click()
                     time.sleep(1)

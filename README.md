@@ -15,6 +15,24 @@ Before running the project, you need to follow these steps:
 
 4. Set the `FIRST_TIME_SETUP` variable in `settings.py` (line 130) to `True`. This will open a web browser and allow you to log in to 'divar' using your phone number and OTP. This process only needs to be done the first time you run the project. After successfully logging in, close the Selenium browser window and set the `FIRST_TIME_SETUP` variable to `False`.
 
+## Setup
+
+```
+# do this once
+python3 -m venv .venv
+
+source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
+
+# do this once
+pip install -r requirements.txt
+
+# run migrations
+python manage.py migrate
+
+#run server
+python manage.py runserver
+```
+
 ## Usage
 
 To use the API, send a POST request to the `/search` endpoint with the following JSON payload:

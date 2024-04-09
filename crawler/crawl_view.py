@@ -24,19 +24,32 @@ class PhoneNumScraper():
         # options.add_argument("--disable-dev-shm-usage")
 
         self.driver = webdriver.Chrome(options=options)
-        self.driver.set_window_size(1024, 768)
+        # self.driver.set_window_size(1024, 768)
+        self.driver.maximize_window()
+        
 
 
     def setup(self, search_city, search_param):
         search_url = settings.URL + "/s/" + search_city + f"?q={search_param}"
         self.driver.get(search_url)
 
+        # if settings.FIRST_TIME_SETUP:
+        #     time.sleep(15)
+
 
     # Scrolling divar page
     def scroll_to_end(self):
 
-        last_height = self.driver.execute_script("return document.body.scrollHeight")
-        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        ### Temporary
+        sccroll_distance = str(800)
+        self.driver.execute_script("window.scrollBy(0, " + sccroll_distance + ");")
+        time.sleep(3)
+
+        
+        #TODO: Scrolling to very end of the page:
+
+        # last_height = self.driver.execute_script("return document.body.scrollHeight")
+        # self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
 
         # while True:
@@ -69,8 +82,9 @@ class PhoneNumScraper():
 
                 href_value = i.get_attribute("href")
                 print(href_value)
-                hrefs.append(href_value)
-                count += 1
+                if href_value not in hrefs:
+                    hrefs.append(href_value)
+                    count += 1
                 if count == search_count:
                     break
 
@@ -96,7 +110,12 @@ class PhoneNumScraper():
                 self.driver.get(url)
 
                 # Wait for the page to load (optional)
-                time.sleep(0.5)
+                try:
+                    WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, "button.kt-button.kt-button--primary.post-actions__get-contact"))
+)
+                except:
+                    pass
                 try:
                     time.sleep(0.5)
                     contact_button = self.driver.find_element(By.CSS_SELECTOR, "button.kt-button.kt-button--primary.post-actions__get-contact")
